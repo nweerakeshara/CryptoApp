@@ -1,0 +1,59 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: MICROSERVICE_NAME-deployment
+  namespace: PROJECT_NAME
+spec: 
+  selector: 
+    matchLabels: 
+      app: MICROSERVICE_NAME
+  replicas: NUMBER_OF_REPLICAS 
+  template: 
+    metadata: 
+      labels: 
+        app: MICROSERVICE_NAME
+    spec: 
+      containers: 
+      - name: MICROSERVICE_NAME
+        image: DOCKER_REGISTRY_IP/DOCKER_IMAGE_NAME:DOCKER_IMAGE_TAG
+        env:
+        - name: NODE_ENV
+          value: stg
+        ports: 
+        - containerPort: APPLICATION_RUNNING_PORT
+        readinessProbe:
+          tcpSocket:
+            port: APPLICATION_RUNNING_PORT
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: APPLICATION_RUNNING_PORT
+          initialDelaySeconds: 60
+          periodSeconds: 20
+        startupProbe:
+          tcpSocket:
+            port: APPLICATION_RUNNING_PORT
+          failureThreshold: 15
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "768Mi"
+            cpu: "300m"
+          limits:
+            memory: "1024Mi"
+            cpu: "400m"
+        volumeMounts:
+        - mountPath: "/var/log/dte/"
+          name: logs-storage
+          subPath: MICROSERVICE_NAME
+        - name: properties-file
+          mountPath: "/app/envfiles/.env.deploy"
+          subPath: ".env.deploy"
+      volumes:
+      - name: logs-storage
+        hostPath:
+          path: /data/logs
+      - name: properties-file
+        configMap:
+          name: MICROSERVICE_NAME-configmap
