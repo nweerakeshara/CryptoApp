@@ -38,7 +38,7 @@ const HomePage = () => {
                 <Typography.Title level={2} className='home-title'>Top 10 Cryptocurrencies in the world</Typography.Title>
                 <Typography.Title level={3} className='show-more'><Link to='/cryptocurrencies'>Show More</Link></Typography.Title>
             </div>
-            <CryptoCurrencies simplified /> {/*simplified keyword use to show only 10 */}
+            <CryptoCurrencies simplified /> {/*simplified keyword use to show only 12 */}
 
             <div className='home-heading-container'>
                 <Typography.Title level={2} className='home-title'>Latest Crypto News</Typography.Title>
