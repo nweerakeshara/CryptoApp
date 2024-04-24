@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Select, Typography, Row, Col, Avatar, Card } from 'antd';
 import moment from 'moment';
+import HTMLReactParser from 'html-react-parser';
 
 import { useGetCryptoNewsQuery } from '../services/cryptoNewsApi';
 import { current } from '@reduxjs/toolkit';
@@ -26,14 +27,14 @@ const News = ({ simplified }) => {
     <Row gutter={[24, 24]}>
       {news?.map((news, i) => (        
         <Col xs={24} sm={12} lg={8} key={i}>
-          {console.log(news)}
+          
           <Card hoverable className="news-card">
             <a href={news.url} target="_blank" rel="noreferrer">
               <div className="news-image-container">
                 <Typography.Title className="news-title" level={4}>{news.title}</Typography.Title>
                 <img src={news?.image || demoImage} alt="" />
               </div>
-              <p>{news.excerpt.length > 100 ? `${news.excerpt.substring(0, 200)}...` : news.excerpt}</p>
+              <p>{news.excerpt.length > 200 ? HTMLReactParser(`${news.excerpt.substring(0, 200)}...`) : HTMLReactParser(news.excerpt)}</p>
               <div className="provider-container">
                 <div>                  
                   <Typography.Text className="provider-name">{news.syndicate}</Typography.Text>
