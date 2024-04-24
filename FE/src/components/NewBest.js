@@ -3,6 +3,8 @@ import millify from 'millify';
 import { Link } from 'react-router-dom';
 import { Card, Row, Col, Input } from 'antd';
 import {Typography} from 'antd';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import { useGetNewBestCryptosQuery } from '../services/cryptoApi';
 
@@ -15,7 +17,7 @@ const NewBest = () => {
     setBestCryptos(data?.data?.newestCoins);
   }, [data]);
 
-  if (isFetching) return 'Loading...'
+  if (isFetching) return <Skeleton count={150} />
 
   return (
     <div>

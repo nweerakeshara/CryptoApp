@@ -7,11 +7,14 @@ import { Typography, Row, Col, Statistic } from 'antd';
 
 import { useGetCryptosQuery } from '../services/cryptoApi';
 import { CryptoCurrencies,News } from '../components';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 
 const HomePage = () => {
     const {data, isFetching} = useGetCryptosQuery(12);
     const globalStats = data?.data?.stats;
+    if (isFetching) return <Skeleton count={150} />
    
     return (
         <div>

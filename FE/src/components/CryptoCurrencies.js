@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { Card, Row, Col, Input } from 'antd';
 
 import { useGetCryptosQuery } from '../services/cryptoApi';
-import { current } from '@reduxjs/toolkit';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 
 const CryptoCurrencies = ({ simplified }) => {
     const count = simplified ? 12 : 100;
@@ -21,7 +23,7 @@ const CryptoCurrencies = ({ simplified }) => {
         setCryptos(filteredData);
     }, [searchTerm]);
 
-    if (isFetching) return 'Loading...'
+    if (isFetching) return <Skeleton count={150} />
     return (
         <div>
             {!simplified && (

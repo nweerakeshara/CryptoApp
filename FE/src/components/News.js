@@ -4,7 +4,8 @@ import moment from 'moment';
 import HTMLReactParser from 'html-react-parser';
 
 import { useGetCryptoNewsQuery } from '../services/cryptoNewsApi';
-import { current } from '@reduxjs/toolkit';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const News = ({ simplified }) => {
   const { data, isFetching } = useGetCryptoNewsQuery({ time: 'w' });
@@ -17,11 +18,11 @@ const News = ({ simplified }) => {
     } else {
       setNews(data?.data);
     }
-  }, [data, simplified]);
-
- 
-  if (isFetching) return 'Loading...'
+  }, [data, simplified]); 
+  
   const demoImage = 'https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News';
+
+  if (isFetching) return <Skeleton count={150} />
 
   return (
     <Row gutter={[24, 24]}>
