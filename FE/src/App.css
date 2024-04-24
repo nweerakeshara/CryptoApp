@@ -359,11 +359,20 @@ width: 70%;
 .crypto-card-container{
     min-height: 65vh !important;
 }
+
+.best-crypto-card-container{
+    min-height: 45vh !important;
+}
 .crypto-card{
     min-width: 250px;
 }
 .crypto-card .crypto-image{
     width:35px;
+}
+
+.crypto-card .best-crypto-image{
+    width:250px;
+    padding-top: 40px;
 }
 .select-timeperiod{
     width: 200px !important;
