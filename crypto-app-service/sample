@@ -1,5 +1,0 @@
-from lorem_text import lorem
-
-lorem_text = lorem.paragraph()
-
-print(lorem_text)

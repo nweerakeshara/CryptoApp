@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+
+    environment {
+        LOG_PATH = "${WORKSPACE}/logs"
+        ENVIRONMENT = 'dev'
+        APP_VERSION = 1
+        GLOBAL_PREFIX = 'api/v1'
+        PORT = 3001
+        MIFE_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        MIFE_BASE_URL = "https://mife.dialog.lk/apicall/"
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh '/usr/bin/npm install'
+            }
+        }
+        stage('Run tests') {
+            steps {
+                sh '/usr/bin/npm run test:coverage'
+            }
+        }
+        stage('Sonar scan') {
+            steps {
+                sh 'echo scanning'
+                sh '/opt/sonar/sonar-scanner/bin/sonar-scanner \
+                -Dsonar.projectKey=ADL-ET-BOSS-DIALOG-SUPERAPP-MINI-APP-AUTHENTICATION-SERVICE-DEVELOP \
+                -Dsonar.sources=. -Dsonar.host.url=https://etsonar.axiatadigitallabs.com \
+                -Dsonar.login=dd38fd69d6a8ab5696c72c0350c1d2e625ecff14 \
+                -Dsonar.exclusions=node_modules/*,**/*.spec.ts,dist/* \
+                -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info'
+            }
+        }
+        stage('WhiteSource scan') {
+            steps {
+                withCredentials([string(credentialsId: 'WHITE-SOURCE-API-KEY', variable: 'API_KEY'), 
+                string(credentialsId: 'WHITESOURCE-ET-BOSS-DIALOG-SUPER-APP-PRODUCT-TOKEN', variable: 'PRODUCT_KEY'), 
+                string(credentialsId: 'WHITESOURCE-MINI-APP-AUTHENTICATION-SERVICE-PROJECT-TOKEN', variable: 'PROJECT_KEY')]) {
+                    sh "java -jar $HOME/WS-agent/wss-unified-agent.jar -apiKey $API_KEY -productToken $PRODUCT_KEY -projectToken $PROJECT_KEY -d ."
+                }
+            }
+        }
+    }
+
+    post {
+        failure {  
+            mail bcc: '', 
+            body: "<b>Pipeline Failure</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Jenkins Job URL: ${env.BUILD_URL}",
+            cc: '',
+            charset: 'UTF-8',
+            from: '',
+            mimeType: 'text/html',
+            replyTo: '',
+            subject: "ERROR CI: Project name -> ${env.JOB_NAME}",
+            to: "yasiru.attanayake@axiatadigitallabs.com";  
+        } 
+    } 
+}
