@@ -5,7 +5,7 @@ version: 0.1
 endpoints:
 
   # +required Unique name for the endpoint. (This name will be used when generating the managed API)
-  - name: CryptoApp REST Endpoint
+  - name: CryptoApp news Endpoint
     # +required Numeric port value that gets exposed via this endpoint
     port: 8080
     # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
@@ -19,7 +19,7 @@ endpoints:
     context: /news
 
   # +required Unique name for the endpoint. (This name will be used when generating the managed API)
-  - name: CryptoApp REST Endpoint
+  - name: CryptoApp crypto Endpoint
     # +required Numeric port value that gets exposed via this endpoint
     port: 8080
     # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
@@ -33,7 +33,7 @@ endpoints:
     context: /crypto
 
   # +required Unique name for the endpoint. (This name will be used when generating the managed API)
-  - name: CryptoApp REST Endpoint
+  - name: CryptoApp crypto/details Endpoint
     # +required Numeric port value that gets exposed via this endpoint
     port: 8080
     # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
@@ -47,7 +47,7 @@ endpoints:
     context: /crypto/details
 
   # +required Unique name for the endpoint. (This name will be used when generating the managed API)
-  - name: CryptoApp REST Endpoint
+  - name: CryptoApp crypto/stats Endpoint
     # +required Numeric port value that gets exposed via this endpoint
     port: 8080
     # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
@@ -61,7 +61,7 @@ endpoints:
     context: /crypto/stats
 
   # +required Unique name for the endpoint. (This name will be used when generating the managed API)
-  - name: CryptoApp REST Endpoint
+  - name: CryptoApp crypto/history Endpoint
     # +required Numeric port value that gets exposed via this endpoint
     port: 8080
     # +required Type of the traffic this endpoint is accepting. Example: REST, GraphQL, etc.
