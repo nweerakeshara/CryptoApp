@@ -2,7 +2,7 @@ const CONSTANTS = require("../constants");
 const axios = require("axios");
 require("dotenv").config();
 
-module.exports.getCryptoNews = async (time) => {
+module.exports.getCryptoNews = async (time) => {  
   const baseUrl = CONSTANTS.NEWS_BASE_URL;
   const defaultTerm = CONSTANTS.NEWS_TERM;
   const defaultSafeSearch = CONSTANTS.NEWS_SAFE_SEARCH;

@@ -46,7 +46,7 @@ module.exports.getCryptoDetails = async (coinId) => {
 };
 
 module.exports.getNewBestCryptos = async () => {
-  const baseUrl = CONSTANTS.PLACES_URL;
+  const baseUrl = CONSTANTS.COIN_RANKING_BASE_URL;
 
   const options = {
     method: CONSTANTS.AXIOS_GET,
@@ -66,7 +66,7 @@ module.exports.getNewBestCryptos = async () => {
 };
 
 module.exports.getCryptoHistory = async (coinId,timePeriod) => {
-  const baseUrl = CONSTANTS.PLACES_URL;
+  const baseUrl = CONSTANTS.COIN_RANKING_BASE_URL;
   const defaultTimePeriod = CONSTANTS.COIN_RANKING_CRYPTO_HISTORY_TIME_PERIOD;
 
   const options = {

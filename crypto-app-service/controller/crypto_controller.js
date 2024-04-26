@@ -1,4 +1,4 @@
-const CONSTANTS = require("../../constants");
+const CONSTANTS = require("../constants");
 const crypto_service = require("../service/crypto_service");
 
 module.exports.getCryptos = async (req, res) => {
@@ -8,7 +8,7 @@ module.exports.getCryptos = async (req, res) => {
 
         res.status(200).json({
             status: "Success",
-            data,
+            data: data.data,
         });
     } catch (error) {
         res.status(400).json({
@@ -25,7 +25,7 @@ module.exports.getCryptoDetails = async (req, res) => {
 
         res.status(200).json({
             status: "Success",
-            data,
+            data: data.data,
         });
     } catch (error) {
         res.status(400).json({
@@ -42,7 +42,7 @@ module.exports.getNewBestCryptos = async (req, res) => {
 
         res.status(200).json({
             status: "Success",
-            data,
+            data: data.data,
         });
     } catch (error) {
         res.status(400).json({
@@ -60,7 +60,7 @@ module.exports.getCryptoHistory = async (req, res) => {
 
         res.status(200).json({
             status: "Success",
-            data,
+            data: data.data,
         });
     } catch (error) {
         res.status(400).json({
