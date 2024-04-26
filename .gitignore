@@ -3,27 +3,27 @@
 .DS_Store
 
 # frontend directory related ignoring files
-front-end/.vscode
-front-end/.idea
-front-end/.env-cmdrc.json
-front-end/.env
-front-end/.dockerignore
-front-end/.DS_Store
+crypto-app-front-end/.vscode
+crypto-app-front-end/.idea
+crypto-app-front-end/.env-cmdrc.json
+crypto-app-front-end/.env
+crypto-app-front-end/.dockerignore
+crypto-app-front-end/.DS_Store
 
-front-end/node_modules
-front-end/package-lock.json
-front-end/build
+crypto-app-front-end/node_modules
+crypto-app-front-end/package-lock.json
+crypto-app-front-end/build
 
 # backend directory related ignoring files
-back-end/.env
-back-end/.vscode
-back-end/.idea
-back-end/.env-cmdrc.json
-back-end/.dockerignore
-back-end/.DS_Store
+crypto-app-service/.env
+crypto-app-service/.vscode
+crypto-app-service/.idea
+crypto-app-service/.env-cmdrc.json
+crypto-app-service/.dockerignore
+crypto-app-service/.DS_Store
 
-back-end/node_modules
-back-end/package-lock.json
+crypto-app-service/node_modules
+crypto-app-service/package-lock.json
 
 # flask api directory related ignoring files
 flask-api/.vscode
