@@ -1,0 +1,31 @@
+const express = require("express");
+var cors = require("cors");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const path = require("path");
+require("dotenv").config();
+
+const app = express();
+const port = process.env.PORT;
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cors());
+
+app.use("/crypto", require("./routes/crypto"));
+app.use("/news", require("./routes/news"));
+
+app.use("/predictions", require("./routes/predictions"));
+app.use("/users", require("./routes/users"));
+app.use("/properties", require("./routes/properties"));
+app.use("/valuations", require("./routes/valuations"));
+
+
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`API listening at http://localhost:${port}`);
+  });
+}
+module.exports = app;
