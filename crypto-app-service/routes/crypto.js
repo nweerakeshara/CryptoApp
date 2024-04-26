@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const demandController = require("../controller/demand/demand-controller.js");
 
-router.get("/", async (req, res) => {
+router.get("/news", async (req, res) => {
   try {
-    const province = req.query.province;
+    const province = req.params.time;
 
     let demandLevel = await demandController.getDemandScore(province);
 
