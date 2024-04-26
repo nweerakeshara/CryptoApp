@@ -17,11 +17,6 @@ app.use(cors());
 app.use("/crypto", require("./routes/crypto"));
 app.use("/news", require("./routes/news"));
 
-app.use("/predictions", require("./routes/predictions"));
-app.use("/users", require("./routes/users"));
-app.use("/properties", require("./routes/properties"));
-app.use("/valuations", require("./routes/valuations"));
-
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(port, () => {

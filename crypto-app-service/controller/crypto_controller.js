@@ -1,97 +1,71 @@
 const CONSTANTS = require("../../constants");
-const accessibilityPlacesAPIService = require("../../service/accessibility_places_api_service");
-const geoDBCitiesService = require("../../service/geo_db_cities");
-const predictionController = require("./prediction_controller");
+const crypto_service = require("../service/crypto_service");
 
-module.exports.getAccessibilityScore = async (
-    lat,
-    long,
-    taxi,
-    airportShuttle,
-    WheelChair,
-    starGrade,
-    cityA,
-    cityCenterA,
-    provinceA
-) => {
+module.exports.getCryptos = async (req, res) => {
+    const { count } = req.query;
+    try {
+        const data = await crypto_service.getCryptos(count);
 
-    let inputFeatures = {};
-    // let locationDetails = await geoDBCitiesService.getCityProvince(lat, long);
-
-    let cityCenter = cityCenterA;
-
-    if (isCoastal(provinceA)) {
-        const accessibilityPlaces = await accessibilityPlacesAPIService.getPlaces(
-            lat,
-            long
-        );
-
-        const airport = accessibilityPlaces.airport.length;
-        const busStation = accessibilityPlaces.busStation.length;
-        const carRental = accessibilityPlaces.carRental.length;
-        const lightRailStation = accessibilityPlaces.lightRailStation.length;
-        const parking = accessibilityPlaces.parking.length;
-        const rvPark = accessibilityPlaces.rvPark.length;
-        const subwayStation = accessibilityPlaces.subwayStation.length;
-        const taxiStand = accessibilityPlaces.taxiStand.length;
-        const trainStation = accessibilityPlaces.trainStation.length;
-        const transitStation = accessibilityPlaces.transitStation.length;
-        const travelAgency = accessibilityPlaces.travelAgency.length;
-        const gasStation = accessibilityPlaces.gasStation.length;
-        const model = CONSTANTS.MODELS[0]; // Coastal model
-        inputFeatures = {
-            lat,
-            long,
-            starGrade,
-            cityCenter,
-            taxi,
-            airportShuttle,
-            WheelChair,
-            airport,
-            busStation,
-            carRental,
-            lightRailStation,
-            parking,
-            rvPark,
-            subwayStation,
-            taxiStand,
-            trainStation,
-            transitStation,
-            travelAgency,
-            gasStation,
-        };
-        console.log(inputFeatures);
-
-        return predictionController
-            .getPrediction(inputFeatures, model)
-            .then((prediction) => {
-                let hubs =
-                    Number(inputFeatures.airport) +
-                    Number(inputFeatures.busStation) +
-                    Number(inputFeatures.carRental) +
-                    Number(inputFeatures.lightRailStation) +
-                    Number(inputFeatures.subwayStation) +
-                    Number(inputFeatures.taxiStand) +
-                    Number(inputFeatures.trainStation) +
-                    Number(inputFeatures.transitStation);
-                let response = {
-                    score: prediction.score,
-                    rating: prediction.rating,
-                    transportHubs: hubs,
-                    parking: inputFeatures.parking,
-                    gasStation: inputFeatures.gasStation,
-                    cityCenter: inputFeatures.cityCenter,
-                    locations: accessibilityPlaces
-                };
-                console.log("ACCESSIBILITY RESPONSE");
-                console.log(response);
-                return response;
-            });
-    } else {
-        return new Error("No model matches given Location");
+        res.status(200).json({
+            status: "Success",
+            data,
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: "fail",
+            msg: error.message,
+        });
     }
 };
 
-const isCoastal = (province) => {
-    return CONSTANTS.COASTAL_PROVINCE.includes(province.toLowerCase());
+module.exports.getCryptoDetails = async (req, res) => {
+    const { coinId } = req.query;
+    try {
+        const data = await crypto_service.getCryptoDetails(coinId);
+
+        res.status(200).json({
+            status: "Success",
+            data,
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: "fail",
+            msg: error.message,
+        });
+    }
+};
+
+module.exports.getNewBestCryptos = async (req, res) => {
+    
+    try {
+        const data = await crypto_service.getNewBestCryptos();
+
+        res.status(200).json({
+            status: "Success",
+            data,
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: "fail",
+            msg: error.message,
+        });
+    }
+};
+
+module.exports.getCryptoHistory = async (req, res) => {
+    const { coinId } = req.query;
+    const { timePeriod } = req.query;
+    try {
+        const data = await crypto_service.getCryptoHistory(coinId,timePeriod);
+
+        res.status(200).json({
+            status: "Success",
+            data,
+        });
+    } catch (error) {
+        res.status(400).json({
+            status: "fail",
+            msg: error.message,
+        });
+    }
 };

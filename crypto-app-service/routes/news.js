@@ -1,23 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const demandController = require("../controller/demand/demand-controller.js");
+const news_controller = require("../controller/news_controller");
 
-router.get("/", async (req, res) => {
-  try {
-    const province = req.query.province;
-
-    let demandLevel = await demandController.getDemandScore(province);
-
-    res.status(200).json({
-      status: "Success",
-      data: demandLevel,
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      msg: error.message,
-    });
-  }
+router.get("/", async (req, res) => {  
+  await news_controller.getCryptoNews(req,res);
 });
 
 module.exports = router;
