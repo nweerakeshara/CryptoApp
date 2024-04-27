@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
 // Replace with the actual URL of your hosted service
-const baseUrl = window.configs.apiUrl;
+const baseUrl = '/choreo-apis/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1.0';
 
 const createRequest = (url) => (url);
 
