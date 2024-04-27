@@ -1,32 +1,35 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
-const headers = {
-    'X-RapidAPI-Key': 'b0fb817316mshcb98dc62348376fp14cce2jsn18eddc099c3c',
-    'X-RapidAPI-Host': 'coinranking1.p.rapidapi.com'
-}
-
-const baseUrl = 'https://coinranking1.p.rapidapi.com';
+// Replace with the actual URL of your hosted service
+const baseUrl = window.configs.apiUrl;
 
 const createRequest = (url) => (url);
 
 export const cryptoApi = createApi({
     reducerPath: 'cryptoApi',
-    baseQuery: fetchBaseQuery({baseUrl, headers}),
+    baseQuery: fetchBaseQuery({baseUrl}),
     endpoints: (builder) => ({
         getCryptos: builder.query({
-            query:(count) => createRequest(`/coins?limit=${count}`)
+            query:(count) => createRequest({url:`/coins?limit=${count}`,
+            params: {                    
+                count: count
+            }})
         }),
         getCryptoDetails: builder.query({
-            query:(coinId) => createRequest(`/coin/${coinId}`)
+            query:(coinId) => createRequest({url:`/details`,
+            params: {                    
+                coinId: coinId
+            }})
         }),
         getNewBestCryptos: builder.query({
             query:() =>createRequest(`/stats`)
         }),
         getCryptoHistory: builder.query({
             query:({coinId, timePeriod}) => createRequest({
-                url: `/coin/${coinId}/history`,
+                url: `/history`,
                 params: {                    
-                    timePeriod: timePeriod ||'24h'
+                    timePeriod: timePeriod ||'24h',
+                    coinId : coinId
                 }
             })
         })
