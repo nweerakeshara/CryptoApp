@@ -1,27 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import oauth from 'axios-oauth-client';
 const axios = require('axios');
 
 //From Choreo
 async function getToken() {
-    try {
-        const response = await axios.post('https://api.asgardeo.io/t/clarindatechnologies/oauth2/token',
-            'grant_type=client_credentials',
-            {
-                headers: {
-                    'Authorization': 'Basic elR6MWZxb3A0WnJZMW5LZjlwYnJkX0NxZGw4YTp1XzdqSjhOMnVxNjlBRUtiVWdVTlZNaHhWX1VHQWZNbGpZc2Y5aEhpVFhBYQ==',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Cookie': 'paf=1714286654.104.263.563063|71acb898e1e9604d7bd8c41e308eb24e'
-                }
-            }
-        );
-
-        return response.data.access_token;
-    } catch (error) {
-        console.error('Error getting token', error);
-        throw error;
-    }
+    const getClientCredentials = oauth.clientCredentials(
+        axios.create(),
+        `https://api.asgardeo.io/t/clarindatechnologies/oauth2/token`,
+        `zTz1fqop4ZrY1nKf9pbrd_Cqdl8a`,
+        `u_7jJ8N2uq69AEKbUgUNVMhxV_UGAfMljYsf9hHiTXAa`
+      );
+      const auth = await getClientCredentials();
+      const accessToken = auth.access_token;
+      return accessToken;
 }
-const baseUrl = 'https://53a6d40a-226e-4cff-9c51-b5ab37e3f591-prod.e1-us-cdp-2.choreoapis.dev/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1';
+const baseUrl = '/choreo-apis/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1.0';
 
 
 const createRequest = (url) => (url);
@@ -32,6 +25,7 @@ export const cryptoNewsApi = createApi({
         baseUrl, prepareHeaders: async (headers) => {
             const token = await getToken();
             headers.set('Authorization', `Bearer ${token}`);
+            headers.set('accept','*/*');
             return headers;
         }
     }),

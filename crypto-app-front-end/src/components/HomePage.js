@@ -13,7 +13,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 const HomePage = () => {
     const {data, isFetching} = useGetCryptosQuery(12);
-    const globalStats = data?.data?.stats;
+    const globalStats = data?.data?.data?.stats;
     if (isFetching) return <Skeleton count={150} />
    
     return (
