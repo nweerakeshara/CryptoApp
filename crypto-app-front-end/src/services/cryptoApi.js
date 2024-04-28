@@ -1,16 +1,35 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import reqmate from 'reqmate';
 
-// Replace with the actual URL of your hosted service
-const baseUrl = '/choreo-apis/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1.0';
+//From Choreo
+const apiUrl = window?.configs?.apiUrl ? window.configs.apiUrl : "/";
+const tokenUrl = window?.configs?.tokenUrl ? window.configs.tokenUrl : "/";
+const postData = {
+    grant_type: 'client_credentials',
+};  
+// Encode the data in application/x-www-form-urlencoded format
+const encodedData = new URLSearchParams(postData).toString();  
+const response = await reqmate
+    .post(tokenUrl, { body: encodedData})
+    .setCaching(500000) 
+    .send();
+
+//From Choreo
+const baseUrl = apiUrl;
+const headers = {
+    'accept': '*/*',
+    'Authorization': `Bearer ${response.access_token}`
+}
+
 
 const createRequest = (url) => (url);
 
 export const cryptoApi = createApi({
     reducerPath: 'cryptoApi',
-    baseQuery: fetchBaseQuery({baseUrl}),
+    baseQuery: fetchBaseQuery({baseUrl, headers}),
     endpoints: (builder) => ({
         getCryptos: builder.query({
-            query:(count) => createRequest({url:`/coins?limit=${count}`,
+            query:(count) => createRequest({url:`/crypto`,
             params: {                    
                 count: count
             }})
