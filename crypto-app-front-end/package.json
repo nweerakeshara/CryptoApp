@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.15.4",
     "axios": "^1.6.8",
+    "axios-oauth-client": "^2.1.0",
     "chart.js": "^4.4.2",
     "html-parser": "^0.11.0",
     "html-react-parser": "^5.1.10",

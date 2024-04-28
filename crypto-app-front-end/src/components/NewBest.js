@@ -13,8 +13,8 @@ const NewBest = () => {
   const [newCryptos, setNewCryptos] = useState([])
   const [bestCryptos, setBestCryptos] = useState([])
   useEffect(() => {
-    setNewCryptos(data?.data?.bestCoins);
-    setBestCryptos(data?.data?.newestCoins);
+    setNewCryptos(data?.data?.data?.bestCoins);
+    setBestCryptos(data?.data?.data?.newestCoins);
   }, [data]);
 
   if (isFetching) return <Skeleton count={150} />

@@ -13,7 +13,7 @@ const CryptoDetails = () => {
   const { coinId } = useParams();
   const [timePeriod, setTimePeriod] = useState('7d');
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId);
-  const cryptoDetails = data?.data?.coin;
+  const cryptoDetails = data?.data?.data?.coin;
   
   const { data:coinHistory } = useGetCryptoHistoryQuery({coinId,timePeriod});
   
@@ -43,7 +43,7 @@ const CryptoDetails = () => {
     <Col className="coin-detail-container">
       <Col className="coin-heading-container">
         <Typography.Title level={2} className="coin-name">
-          {data?.data?.coin.name} ({data?.data?.coin.symbol}) Price
+          {data?.data?.data?.coin.name} ({data?.data?.data?.coin.symbol}) Price
         </Typography.Title>
         <p>{cryptoDetails.name} live price in US Dollar (USD). View value statistics, market cap and supply.</p>
       </Col>
@@ -51,7 +51,7 @@ const CryptoDetails = () => {
         {time.map((date) => <Select.Option key={date}>{date}</Select.Option>)}
       </Select>
 
-      <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails.price)} coinName={cryptoDetails.name} />
+      <LineChart coinHistory={coinHistory?.data} currentPrice={millify(cryptoDetails.price)} coinName={cryptoDetails.name} />
       <Col className="stats-container">
         <Col className="coin-value-statistics">
           <Col className="coin-value-statistics-heading">

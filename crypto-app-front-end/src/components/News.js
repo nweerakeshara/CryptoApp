@@ -13,39 +13,42 @@ const News = ({ simplified }) => {
 
   useEffect(() => {
     if (simplified) {
-      const filteredData = data?.data.slice(0, 6);
+      const filteredData = Array.isArray(data?.data?.data) ? data?.data.data.slice(0, 6) : [];
       setNews(filteredData);
     } else {
-      setNews(data?.data);
+      setNews(data?.data?.data);
     }
-  }, [data, simplified]); 
-  
+  }, [data, simplified]);
+
   const demoImage = 'https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News';
 
   if (isFetching) return <Skeleton count={150} />
 
   return (
     <Row gutter={[24, 24]}>
-      {news?.map((news, i) => (        
-        <Col xs={24} sm={12} lg={8} key={i}>
-          
-          <Card hoverable className="news-card">
-            <a href={news.url} target="_blank" rel="noreferrer">
-              <div className="news-image-container">
-                <Typography.Title className="news-title" level={4}>{news.title}</Typography.Title>
-                <img src={news?.image || demoImage} alt="" />
-              </div>
-              <p>{news.excerpt.length > 200 ? HTMLReactParser(`${news.excerpt.substring(0, 200)}...`) : HTMLReactParser(news.excerpt)}</p>
-              <div className="provider-container">
-                <div>                  
-                  <Typography.Text className="provider-name">{news.syndicate}</Typography.Text>
+      {Array.isArray(news) && news.length !== 0 && (<>
+        {news?.map((news, i) => (
+          <Col xs={24} sm={12} lg={8} key={i}>
+
+            <Card hoverable className="news-card">
+              <a href={news.url} target="_blank" rel="noreferrer">
+                <div className="news-image-container">
+                  <Typography.Title className="news-title" level={4}>{news.title}</Typography.Title>
+                  <img src={news?.image || demoImage} alt="" />
                 </div>
-                <Typography.Text>{news.relativeTime}</Typography.Text>
-              </div>
-            </a>
-          </Card>
-        </Col>
-      ))}
+                <p>{news.excerpt.length > 200 ? HTMLReactParser(`${news.excerpt.substring(0, 200)}...`) : HTMLReactParser(news.excerpt)}</p>
+                <div className="provider-container">
+                  <div>
+                    <Typography.Text className="provider-name">{news.syndicate}</Typography.Text>
+                  </div>
+                  <Typography.Text>{news.relativeTime}</Typography.Text>
+                </div>
+              </a>
+            </Card>
+          </Col>
+        ))}
+      </>)}
+
     </Row>
   )
 }
