@@ -1,32 +1,37 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import reqmate from 'reqmate';
+const axios = require('axios');
 
 //From Choreo
-const apiUrl = window?.configs?.apiUrl ? window.configs.apiUrl : "/";
-const tokenUrl = window?.configs?.tokenUrl ? window.configs.tokenUrl : "/";
-const postData = {
-    grant_type: 'client_credentials',
-};  
-// Encode the data in application/x-www-form-urlencoded format
-const encodedData = new URLSearchParams(postData).toString();  
-const response = await reqmate
-    .post(tokenUrl, { body: encodedData})
-    .setCaching(500000) 
-    .send();
+async function getToken() {
+    try {
+        const response = await axios.post('https://api.asgardeo.io/t/clarindatechnologies/oauth2/token', 
+            'grant_type=client_credentials',
+            {
+                headers: {
+                    'Authorization': 'Basic elR6MWZxb3A0WnJZMW5LZjlwYnJkX0NxZGw4YTp1XzdqSjhOMnVxNjlBRUtiVWdVTlZNaHhWX1VHQWZNbGpZc2Y5aEhpVFhBYQ==',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Cookie': 'paf=1714286654.104.263.563063|71acb898e1e9604d7bd8c41e308eb24e'
+                }
+            }
+        );
 
-//From Choreo
-const baseUrl = apiUrl;
-const headers = {
-    'accept': '*/*',
-    'Authorization': `Bearer ${response.access_token}`
+        return response.data.access_token;
+    } catch (error) {
+        console.error('Error getting token', error);
+        throw error;
+    }
 }
-
+const baseUrl = 'https://53a6d40a-226e-4cff-9c51-b5ab37e3f591-prod.e1-us-cdp-2.choreoapis.dev/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1';
 
 const createRequest = (url) => (url);
 
 export const cryptoApi = createApi({
     reducerPath: 'cryptoApi',
-    baseQuery: fetchBaseQuery({baseUrl, headers}),
+    baseQuery: fetchBaseQuery({baseUrl, prepareHeaders: async (headers) => {
+        const token = await getToken();
+        headers.set('Authorization', `Bearer ${token}`);
+        return headers;
+    }}),
     endpoints: (builder) => ({
         getCryptos: builder.query({
             query:(count) => createRequest({url:`/crypto`,
