@@ -11,7 +11,9 @@ async function getToken() {
         `zTz1fqop4ZrY1nKf9pbrd_Cqdl8a`,
         `u_7jJ8N2uq69AEKbUgUNVMhxV_UGAfMljYsf9hHiTXAa`
       );
+      console.log("Dddddddd")
       const auth = await getClientCredentials();
+      console.log(auth)
       const accessToken = auth.access_token;
       return accessToken;
 }
