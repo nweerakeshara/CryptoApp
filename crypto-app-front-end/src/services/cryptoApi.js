@@ -7,25 +7,24 @@ const axios = require('axios');
 async function getToken() {
     const getClientCredentials = oauth.clientCredentials(
         axios.create(),
-        `https://sts.choreo.dev/oauth2/token`,
-        `d8fdTKVl8fzu15nusy0WK9Ek5hsa`,
-        `t8583aUMX5tvbS0jMoxdSb_Yx4_FrXef8xR3oS0PP4Qa`
-      );
-      console.log("Dddddddd")
+        `<token url>`,
+        `<Consumer Key>`,
+        `<Consumer Secret>`
+      );      
       const auth = await getClientCredentials();
       console.log(auth)
       const accessToken = auth.access_token;
       return accessToken;
 }
-const baseUrl = 'https://53a6d40a-226e-4cff-9c51-b5ab37e3f591-dev.e1-us-cdp-2.choreoapis.dev/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1';
+const baseUrl = 'https://53a6d40a-226e-4cff-9c51-b5ab37e3f591-prod.e1-us-cdp-2.choreoapis.dev/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1';
 
 const createRequest = (url) => (url);
 
 export const cryptoApi = createApi({
     reducerPath: 'cryptoApi',
     baseQuery: fetchBaseQuery({baseUrl, prepareHeaders: async (headers) => {
-        const token = await getToken();
-        headers.set('Authorization', `Bearer ${token}`);
+        //const token = await getToken();
+        headers.set('Authorization', `Bearer <access_token here>`);
         headers.set('accept','*/*');
         return headers;
     }}),
