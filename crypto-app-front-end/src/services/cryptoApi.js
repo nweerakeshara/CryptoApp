@@ -16,7 +16,7 @@ async function getToken() {
       const accessToken = auth.access_token;
       return accessToken;
 }
-const baseUrl = 'https://53a6d40a-226e-4cff-9c51-b5ab37e3f591-prod.e1-us-cdp-2.choreoapis.dev/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1';
+const baseUrl = 'https://53a6d40a-226e-4cff-9c51-b5ab37e3f591-dev.e1-us-cdp-2.choreoapis.dev/crypto-application/crypto-application-service/cryptoapp-endpoints-5c6/v1';
 
 const createRequest = (url) => (url);
 
